@@ -10,6 +10,12 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.Waterlogged;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Creaking;
+import org.bukkit.entity.EnderDragon;
+import org.bukkit.entity.Ghast;
+import org.bukkit.entity.Hoglin;
+import org.bukkit.entity.MagmaCube;
+import org.bukkit.entity.Shulker;
+import org.bukkit.entity.Slime;
 import org.bukkit.entity.Mannequin;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Monster;
@@ -827,6 +833,29 @@ class WaterRegressionTest {
         config.set("force-hostile-mob-aggro", false);
         aggro.run();
         verify(phantom, never()).setTarget(any());
+    }
+
+    @ParameterizedTest
+    @ValueSource(classes = {Slime.class, MagmaCube.class, Ghast.class, Hoglin.class, Shulker.class})
+    void enemiesOutsideMonsterAcquireBody(Class<? extends Mob> type) {
+        when(player.getGameMode()).thenReturn(GameMode.SURVIVAL);
+        Mob enemy = mock(type);
+        when(enemy.isValid()).thenReturn(true);
+        when(enemy.isAware()).thenReturn(true);
+        when(body.getNearbyEntities(anyDouble(), anyDouble(), anyDouble())).thenReturn(List.of(enemy));
+        aggro.run();
+        verify(enemy).setTarget(body);
+    }
+
+    @Test
+    void enderDragonIsNotGivenABodyTarget() {
+        when(player.getGameMode()).thenReturn(GameMode.SURVIVAL);
+        EnderDragon dragon = mock(EnderDragon.class);
+        when(dragon.isValid()).thenReturn(true);
+        when(dragon.isAware()).thenReturn(true);
+        when(body.getNearbyEntities(anyDouble(), anyDouble(), anyDouble())).thenReturn(List.of(dragon));
+        aggro.run();
+        verify(dragon, never()).setTarget(any());
     }
 
     @Test
