@@ -6,6 +6,7 @@ softdepend: [LuckPerms, MyPet]
 author: Sanowo0390
 description: Server-side anchored freecam for survival servers, with a damageable body proxy.
 website: https://github.com/Sanowo0390/Anchored-Freecam
+softdepend: [Towny]
 commands:
   freecam:
     description: AnchoredFreecam commands.
@@ -24,6 +25,9 @@ permissions:
   anchoredfreecam.reload:
     description: Allows reloading AnchoredFreecam's configuration.
     default: op
+  anchoredfreecam.towny.bypass:
+    description: Allows the freecam camera to enter Towny towns without restriction.
+    default: false
   anchoredfreecam.admin:
     description: Grants all AnchoredFreecam permissions.
     default: op
@@ -32,3 +36,4 @@ permissions:
       anchoredfreecam.range: true
       anchoredfreecam.language: true
       anchoredfreecam.reload: true
+      anchoredfreecam.towny.bypass: true
