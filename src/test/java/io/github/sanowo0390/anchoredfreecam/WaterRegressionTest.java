@@ -9,6 +9,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Waterlogged;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Creaking;
 import org.bukkit.entity.Mannequin;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Monster;
@@ -826,6 +827,20 @@ class WaterRegressionTest {
         config.set("force-hostile-mob-aggro", false);
         aggro.run();
         verify(phantom, never()).setTarget(any());
+    }
+
+    @Test
+    void creakingIsNotForcedToTargetBodyButIsRedirectedWhenTargetingPlayer() {
+        when(player.getGameMode()).thenReturn(GameMode.SURVIVAL);
+        Creaking creaking = mock(Creaking.class);
+        when(creaking.isValid()).thenReturn(true);
+        when(creaking.isAware()).thenReturn(true);
+        when(body.getNearbyEntities(anyDouble(), anyDouble(), anyDouble())).thenReturn(List.of(creaking));
+        aggro.run();
+        verify(creaking, never()).setTarget(any());
+        when(creaking.getTarget()).thenReturn(player);
+        aggro.run();
+        verify(creaking).setTarget(body);
     }
 
     @Test

@@ -8,6 +8,7 @@ import org.bukkit.Input;
 import org.bukkit.Location;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.entity.CaveSpider;
+import org.bukkit.entity.Creaking;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Enemy;
@@ -1117,6 +1118,9 @@ final class FreecamManager {
             return false;
         }
         if (monster instanceof Warden) {
+            return false;
+        }
+        if (monster instanceof Creaking) {
             return false;
         }
 
