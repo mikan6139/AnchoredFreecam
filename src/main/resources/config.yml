@@ -32,7 +32,7 @@ exit-on-body-damage: true
 # the invisible entity flag so its model is not visible.
 hide-camera-player-from-others: true
 
-# Continuously keep normal hostile Monster targets on the anchored Mannequin.
+# Continuously keep hostile mob (Enemy) targets on the anchored Mannequin.
 # This is needed because vanilla mob target selectors normally target Player,
 # not Mannequin.
 force-hostile-mob-aggro: true
