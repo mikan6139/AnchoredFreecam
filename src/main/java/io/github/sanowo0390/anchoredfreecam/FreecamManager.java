@@ -8,14 +8,14 @@ import org.bukkit.Input;
 import org.bukkit.Location;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.entity.CaveSpider;
+import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Enderman;
+import org.bukkit.entity.Enemy;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mannequin;
 import org.bukkit.entity.Mob;
-import org.bukkit.entity.Monster;
-import org.bukkit.entity.Phantom;
 import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Piglin;
 import org.bukkit.entity.PiglinBrute;
@@ -1096,8 +1096,8 @@ final class FreecamManager {
     }
 
     private boolean supportsBodyAggro(Mob mob) {
-        // Paper classifies phantoms as Flying + Enemy, not Monster.
-        return mob instanceof Monster || mob instanceof Phantom;
+        // Enemy also covers hostile mobs outside Monster: phantom, slime, magma cube, ghast, hoglin, shulker.
+        return mob instanceof Enemy && !(mob instanceof EnderDragon);
     }
 
     private boolean shouldForceTargetBody(Mob monster) {
